@@ -1,0 +1,15 @@
+{
+  "name": "psg-production-planner",
+  "version": "2.0.0",
+  "description": "PSG Production Planning Web App",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "multer": "^2.0.0",
+    "xlsx": "^0.18.5"
+  }
+}

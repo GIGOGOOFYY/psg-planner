@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PSG — Production Planning</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1e5c3a 0%, #2d7a4f 50%, #1a4a30 100%); display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+  .card { background: #fff; border-radius: 16px; padding: 38px 36px 32px; width: 370px; box-shadow: 0 24px 64px rgba(0,0,0,.3); }
+  .logo { text-align: center; margin-bottom: 28px; }
+  .logo h1 { font-size: 1.25rem; font-weight: 800; color: #1e5c3a; letter-spacing: -.3px; }
+  .logo p { font-size: .78rem; color: #64748b; margin-top: 3px; }
+  .form-group { margin-bottom: 15px; }
+  label { display: block; font-size: .72rem; font-weight: 700; color: #4a7a5e; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 5px; }
+  input { width: 100%; padding: 10px 12px; border: 1.5px solid #d4eadb; border-radius: 8px; font-size: .88rem; color: #1e293b; transition: border .15s; background: #f9fdfb; }
+  input:focus { outline: none; border-color: #2d7a4f; box-shadow: 0 0 0 3px rgba(45,122,79,.12); background: #fff; }
+  button { width: 100%; padding: 11px; background: #2d7a4f; color: #fff; border: none; border-radius: 8px; font-size: .92rem; font-weight: 700; cursor: pointer; margin-top: 8px; transition: background .15s; letter-spacing: .3px; }
+  button:hover { background: #1e5c3a; }
+  .error { background: #fee2e2; color: #991b1b; padding: 10px 14px; border-radius: 7px; font-size: .82rem; margin-bottom: 14px; display: none; }
+  .footer { text-align: center; margin-top: 20px; font-size: .7rem; color: #9dbfaa; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <h1>Production Planning</h1>
+    <p>Pakistan Safety Glass Works</p>
+  </div>
+  <div class="error" id="err"></div>
+  <div class="form-group">
+    <label>Username</label>
+    <input type="text" id="username" placeholder="Enter username" autocomplete="username">
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter password" autocomplete="current-password">
+  </div>
+  <button onclick="login()">Sign In</button>
+  <div class="footer">Production Planning System &nbsp;·&nbsp; v2.0</div>
+</div>
+<script>
+  document.getElementById('password').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+  document.getElementById('username').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('password').focus(); });
+  async function login() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const err = document.getElementById('err');
+    err.style.display = 'none';
+    if (!username || !password) { err.textContent = 'Please enter username and password'; err.style.display='block'; return; }
+    const res = await fetch('/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ username, password }) });
+    const data = await res.json();
+    if (!res.ok) { err.textContent = data.error || 'Login failed'; err.style.display='block'; return; }
+    window.location.href = '/';
+  }
+</script>
+</body>
+</html>
