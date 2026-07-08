@@ -478,7 +478,8 @@ async function init(){
   $('u-name').textContent=me.username;
   $('u-role').textContent=me.role;
   $('u-avatar').textContent=me.username[0].toUpperCase();
-  if(me.role==='admin'){$('admin-nav').style.display='';$('btn-new-order').style.display='';$('th-actions').style.display='';}
+  $('btn-new-order').style.display='';
+  if(me.role==='admin'){$('admin-nav').style.display='';$('th-actions').style.display='';}
   $('today-lbl').textContent=new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
   nav('dashboard');
 }
@@ -603,7 +604,7 @@ async function loadOrders(){
       ${isAdmin?`<td style="white-space:nowrap">
         <button class="btn btn-o btn-sm btn-ic" onclick="editOrder(${o.id})" title="Edit"><i class="fa fa-edit"></i></button>
         <button class="btn btn-d btn-sm btn-ic" onclick="delOrder(${o.id},'${o.order_number}')" title="Delete"><i class="fa fa-trash"></i></button>
-      </td>`:''}
+      </td>`:USER?.role==='team'?`<td></td>`:''}
     </tr>`;
   }).join(''):'<tr><td class="emp" colspan="10">No orders found</td></tr>';
 }

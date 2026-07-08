@@ -180,7 +180,7 @@ app.get('/api/orders/:id', requireAuth, (req, res) => {
 app.get('/api/orders/:id/progress', requireAuth, (req, res) => {
   res.json(db.prepare('SELECT * FROM wc_progress WHERE order_id=?').all(req.params.id));
 });
-app.post('/api/orders', requireAdmin, (req, res) => {
+app.post('/api/orders', requireAuth, (req, res) => {
   const o=req.body;
   const num=(o.order_number||'').trim();
   if(!num) return res.status(400).json({error:'Order number required'});
